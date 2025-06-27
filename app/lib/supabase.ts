@@ -1,9 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.SUPABASE_URL!
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null
 
 // Database types for fund research data
 export interface FundResearchRecord {
@@ -25,6 +27,11 @@ export class FundDatabase {
   // Check if fund data exists in database
   static async getFundData(fundName: string): Promise<FundResearchRecord | null> {
     try {
+      if (!supabase) {
+        console.log('Supabase not configured')
+        return null
+      }
+
       const normalizedName = fundName.toLowerCase().trim()
       
       const { data, error } = await supabase
@@ -52,6 +59,11 @@ export class FundDatabase {
   // Save fund research data to database
   static async saveFundData(fundData: any): Promise<boolean> {
     try {
+      if (!supabase) {
+        console.log('Supabase not configured, skipping database save')
+        return false
+      }
+
       const record: Omit<FundResearchRecord, 'id' | 'created_at' | 'updated_at'> = {
         fund_name: fundData.fundName,
         fund_name_normalized: fundData.fundName.toLowerCase().trim(),
@@ -86,6 +98,11 @@ export class FundDatabase {
   // Get all cached funds for reference
   static async getAllCachedFunds(): Promise<{ fund_name: string, research_date: string }[]> {
     try {
+      if (!supabase) {
+        console.log('Supabase not configured')
+        return []
+      }
+
       const { data, error } = await supabase
         .from('fund_research')
         .select('fund_name, research_date')

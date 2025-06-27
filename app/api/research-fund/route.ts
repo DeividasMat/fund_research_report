@@ -4,9 +4,11 @@ import axios from 'axios'
 import { getDemoData } from '../../lib/demoData'
 import { FundDatabase } from '../../lib/supabase'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null
 
 interface PerplexityResponse {
   choices: Array<{
@@ -77,6 +79,10 @@ async function searchWithPerplexity(query: string): Promise<string> {
 
 async function generateStructuredReport(rawData: string, fundName: string): Promise<FundResearchData> {
   try {
+    if (!openai) {
+      throw new Error('OpenAI not configured')
+    }
+
     const prompt = `
 Based on the following research data about the private equity fund "${fundName}", create a comprehensive structured report in JSON format. 
 
