@@ -1,13 +1,43 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'Private Credit Fund Research - Credit Intelligence Platform',
-  description: 'Get comprehensive reports on private credit funds including direct lending strategies, credit teams, recent transactions, and more.',
+  title: 'CreditIntel | Private Credit Intelligence Platform',
+  description: 'Advanced AI-powered private credit fund research platform. Access comprehensive insights on fund strategies, team composition, portfolio analysis, and recent transactions.',
+  keywords: 'private credit, fund research, direct lending, credit analysis, institutional investing, fund intelligence',
+  authors: [{ name: 'CreditIntel' }],
+  robots: 'index, follow',
+  metadataBase: new URL('https://creditintel.com'),
+  openGraph: {
+    title: 'CreditIntel - Private Credit Intelligence Platform',
+    description: 'Advanced AI-powered private credit fund research platform',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CreditIntel - Private Credit Intelligence Platform',
+    description: 'Advanced AI-powered private credit fund research platform',
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -16,21 +46,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-          <nav className="bg-white shadow-sm border-b">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-16">
-                <div className="flex items-center">
-                  <h1 className="text-xl font-bold text-gray-900">Private Credit Research</h1>
-                </div>
-                                  <div className="text-sm text-gray-500">
-                    Private Credit Intelligence Platform
-                  </div>
-              </div>
-            </div>
-          </nav>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <meta name="theme-color" content="#2563eb" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={`${inter.className} antialiased bg-gray-50`}>
+        <div className="min-h-screen">
           {children}
         </div>
         <Toaster 
@@ -38,8 +60,23 @@ export default function RootLayout({
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#363636',
-              color: '#fff',
+              background: '#1f2937',
+              color: '#f9fafb',
+              borderRadius: '12px',
+              padding: '16px',
+              fontWeight: '500',
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#f9fafb',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#f9fafb',
+              },
             },
           }}
         />

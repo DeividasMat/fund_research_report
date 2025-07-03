@@ -22,17 +22,34 @@ interface FundResearchData {
   fundName: string
   address: string
   contactEmail: string
+  website: string
+  phone: string
   investmentThesis: string
+  aum: string
+  foundedYear: string
+  headquarters: string
+  officeLocations: string[]
   funds: Array<{
     name: string
     strategy: string
     raisedDate: string
     size: string
+    targetSize: string
+    status: string
+    vintageYear: string
+    closingDate: string
+    fundNumber: string
   }>
   teamMembers: Array<{
     name: string
     position: string
+    email: string
+    phone: string
+    linkedin: string
     experience: string
+    education: string
+    previousCompanies: string[]
+    yearsAtFirm: string
   }>
   recentDeals: Array<{
     company: string
@@ -40,7 +57,24 @@ interface FundResearchData {
     date: string
     dealType: string
     amount: string
+    currency: string
+    description: string
+    leadArrangers: string[]
+    coInvestors: string[]
+    use_of_proceeds: string
   }>
+  competitiveAnalysis: {
+    mainCompetitors: string[]
+    marketPosition: string
+    differentiators: string[]
+  }
+  performanceMetrics: {
+    totalDeployed: string
+    numberOfInvestments: string
+    averageDealSize: string
+    geographicFocus: string[]
+    sectorFocus: string[]
+  }
 }
 
 async function searchWithPerplexity(query: string): Promise<string> {
@@ -77,6 +111,75 @@ async function searchWithPerplexity(query: string): Promise<string> {
   }
 }
 
+async function performEnhancedAnalysis(rawData: string, fundName: string): Promise<string> {
+  try {
+    if (!openai) {
+      throw new Error('OpenAI not configured')
+    }
+
+    const analysisPrompt = `
+You are an expert financial analyst specializing in private credit research. Analyze the following comprehensive research data about "${fundName}" and extract maximum insights, details, and connections.
+
+RESEARCH DATA:
+${rawData}
+
+Your task is to:
+1. IDENTIFY and EXTRACT all email addresses, phone numbers, LinkedIn profiles mentioned
+2. CONNECT team member information with their specific roles and backgrounds
+3. EXTRACT precise fund details: exact closing dates, fund sizes, target amounts, vintage years
+4. ANALYZE transaction details: amounts, currencies, lead arrangers, co-investors, deal structures
+5. IDENTIFY competitive positioning, market share, differentiators
+6. EXTRACT performance metrics, AUM, deployment statistics, sector focus
+7. FIND contact information, office locations, website, founding year
+8. ANALYZE investment thesis and strategy patterns
+9. IDENTIFY trends in recent transactions and investment patterns
+10. EXTRACT educational backgrounds, previous companies, career progression
+
+ENHANCEMENT INSTRUCTIONS:
+- Extract EVERY piece of contact information found (emails, phones, LinkedIn)
+- Identify patterns and connections between different pieces of information
+- Cross-reference team members with their transaction involvement
+- Extract precise financial metrics and performance data
+- Identify and analyze competitive landscape mentions
+- Find and organize all fund-specific information chronologically
+- Extract detailed transaction mechanics and structures
+- Organize office locations and contact details systematically
+
+Provide a comprehensive, enhanced analysis that maximizes the insights from the raw data. Include all contact details, precise dates, financial metrics, and strategic insights you can extract.
+
+Format as detailed analytical text with clear sections for different types of information.
+`
+
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert financial analyst with deep expertise in private credit markets, fund analysis, and data extraction. You excel at finding patterns, extracting contact information, and providing comprehensive financial analysis.'
+        },
+        {
+          role: 'user',
+          content: analysisPrompt
+        }
+      ],
+      max_tokens: 4000,
+      temperature: 0.1
+    })
+
+    const enhancedAnalysis = response.choices[0].message.content
+    if (!enhancedAnalysis) {
+      throw new Error('No enhanced analysis from OpenAI')
+    }
+
+    console.log('Enhanced analysis completed, length:', enhancedAnalysis.length)
+    return enhancedAnalysis
+  } catch (error) {
+    console.error('Enhanced analysis error:', error)
+    // Fallback to original data if analysis fails
+    return rawData
+  }
+}
+
 async function generateStructuredReport(rawData: string, fundName: string): Promise<FundResearchData> {
   try {
     if (!openai) {
@@ -89,25 +192,42 @@ Based on the following research data about the private credit fund "${fundName}"
 Research Data:
 ${rawData}
 
-Please create a JSON object with the following structure:
+Please create a comprehensive JSON object with the following structure:
 {
   "fundName": "Official fund name",
-  "address": "Main office address",
-  "contactEmail": "Contact email if available",
-  "investmentThesis": "Detailed private credit investment strategy and focus (2-3 sentences)",
+  "address": "Full headquarters address",
+  "contactEmail": "Main contact email",
+  "website": "Official website URL",
+  "phone": "Main phone number",
+  "investmentThesis": "Detailed private credit investment strategy and approach (3-4 sentences)",
+  "aum": "Total assets under management",
+  "foundedYear": "Year founded",
+  "headquarters": "Primary headquarters location",
+  "officeLocations": ["List of all office locations"],
   "funds": [
     {
-      "name": "Credit fund name",
-      "strategy": "Private credit strategy (direct lending, distressed, etc.)",
-      "raisedDate": "Date raised",
-      "size": "Fund size"
+      "name": "Complete fund name",
+      "strategy": "Detailed investment strategy",
+      "raisedDate": "Exact closing date",
+      "size": "Final fund size",
+      "targetSize": "Target size if different",
+      "status": "Fund status (closed, raising, etc.)",
+      "vintageYear": "Vintage year",
+      "closingDate": "Final closing date",
+      "fundNumber": "Fund sequence number"
     }
   ],
   "teamMembers": [
     {
       "name": "Full name",
-      "position": "Position/title (focus on credit team)",
-      "experience": "Brief background in private credit (1-2 sentences)"
+      "position": "Complete title/position",
+      "email": "Email address if found",
+      "phone": "Direct phone if available",
+      "linkedin": "LinkedIn profile URL",
+      "experience": "Detailed background and experience",
+      "education": "Educational background",
+      "previousCompanies": ["List of previous companies"],
+      "yearsAtFirm": "Years at current firm"
     }
   ],
   "recentDeals": [
@@ -115,21 +235,46 @@ Please create a JSON object with the following structure:
       "company": "Borrower company name",
       "sector": "Industry sector",
       "date": "Transaction date",
-      "dealType": "Type of credit (direct lending, unitranche, etc.)",
-      "amount": "Credit facility amount if available"
+      "dealType": "Type of credit facility",
+      "amount": "Credit amount",
+      "currency": "Currency (USD, EUR, etc.)",
+      "description": "Deal description",
+      "leadArrangers": ["Lead arrangers"],
+      "coInvestors": ["Co-investors if any"],
+      "use_of_proceeds": "Use of proceeds"
     }
-  ]
+  ],
+  "competitiveAnalysis": {
+    "mainCompetitors": ["List of main competitors"],
+    "marketPosition": "Market position description",
+    "differentiators": ["Key differentiating factors"]
+  },
+  "performanceMetrics": {
+    "totalDeployed": "Total capital deployed",
+    "numberOfInvestments": "Number of investments",
+    "averageDealSize": "Average deal size",
+    "geographicFocus": ["Geographic regions"],
+    "sectorFocus": ["Primary sectors"]
+  }
 }
 
-Requirements:
-- Focus specifically on PRIVATE CREDIT activities, not general private equity
-- Include at least 3-5 team members from the private credit division if available
-- Include at least 5-10 recent private credit deals/transactions from the last 3 years if available
-- Include multiple private credit funds if the firm manages several
-- Use "Not available" if specific information is not found
-- Ensure all data is accurate and based on the research provided
-- Focus on private credit transactions from 2021-2024 (direct lending, unitranche, etc.)
-- Make the investment thesis focused on private credit strategy and approach
+CRITICAL REQUIREMENTS - ADVANCED ANALYSIS:
+- Focus EXCLUSIVELY on PRIVATE CREDIT activities, ignore general private equity
+- Extract MAXIMUM detail from the research data provided
+- Include 5-10+ team members from credit division with ALL available contact details
+- PRIORITIZE finding email addresses, phone numbers, LinkedIn profiles for team members
+- Include 10-15+ recent private credit transactions from 2021-2024 with comprehensive details
+- Include ALL private credit funds managed by the firm with exact dates and sizes
+- Find specific fund closing dates, target sizes, vintage years, fund numbers
+- Extract detailed transaction information: lead arrangers, co-investors, use of proceeds
+- Include competitive analysis and performance metrics from the data
+- Use precise dates, amounts, and contact details when available
+- If email/phone not found, state "Not publicly available" but include all other details
+- Focus on direct lending, unitranche, senior debt, mezzanine, distressed credit
+- Include educational backgrounds and career histories for team members
+- Extract office locations, founding year, total AUM, website, main contacts
+- Analyze competitive positioning and market differentiators
+- Include sector focus, geographic focus, average deal sizes, deployment metrics
 
 Return only the JSON object, no additional text.
 `
@@ -233,26 +378,101 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Step 3: Perform live research using APIs
-    console.log('Performing live research for:', fundName)
+    // Step 3: Perform advanced multi-stage research
+    console.log('Performing advanced multi-stage research for:', fundName)
     
-    const searchQueries = [
-      `${fundName} private credit fund company information address contact email website`,
-      `${fundName} private credit investment strategy direct lending credit funds focus`,
-      `${fundName} private credit funds portfolio AUM credit fund sizes raised dates`,
-      `${fundName} private credit team members leadership credit investment professionals`,
-      `${fundName} private credit recent deals direct lending transactions 2021 2022 2023 2024 credit investments`
+    // Stage 1: Basic Company Information
+    const basicInfoQueries = [
+      `${fundName} private credit fund headquarters address phone website contact information`,
+      `${fundName} private credit firm founded year history background AUM assets under management`,
+      `${fundName} office locations global presence regional offices contact details`,
+      `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach`
     ]
 
-    // Execute all searches in parallel for better performance
-    const searchPromises = searchQueries.map(query => searchWithPerplexity(query))
-    const searchResults = await Promise.all(searchPromises)
+    console.log('Stage 1: Gathering basic company information...')
+    const basicInfoResults = await Promise.all(basicInfoQueries.map(query => searchWithPerplexity(query)))
 
-    // Combine all search results
-    const combinedResearchData = searchResults.join('\n\n---\n\n')
+    // Stage 2: Fund-Specific Information
+    const fundQueries = [
+      `${fundName} private credit funds list all credit funds raised fund sizes target sizes vintage years`,
+      `${fundName} credit fund closing dates final closing first closing fund raising timeline`,
+      `${fundName} credit fund strategies senior debt unitranche mezzanine distressed opportunistic`,
+      `${fundName} fund performance metrics IRR returns deployment rate portfolio statistics`
+    ]
 
-    // Step 4: Generate structured report using OpenAI
-    const structuredReport = await generateStructuredReport(combinedResearchData, fundName)
+    console.log('Stage 2: Gathering detailed fund information...')
+    const fundResults = await Promise.all(fundQueries.map(query => searchWithPerplexity(query)))
+
+    // Stage 3: Team Member Deep Dive
+    const teamQueries = [
+      `${fundName} credit team members leadership partners managing directors senior professionals`,
+      `${fundName} credit team contact information email addresses direct contact LinkedIn profiles`,
+      `${fundName} credit professionals education background experience previous companies career history`,
+      `${fundName} senior credit team years at firm tenure leadership experience credit markets`
+    ]
+
+    console.log('Stage 3: Researching team members and contacts...')
+    const teamResults = await Promise.all(teamQueries.map(query => searchWithPerplexity(query)))
+
+    // Stage 4: Recent Transactions Analysis
+    const dealQueries = [
+      `${fundName} recent credit transactions 2023 2024 direct lending deals senior debt unitranche`,
+      `${fundName} credit investments 2022 2021 leveraged loans term loan B facilities borrower companies`,
+      `${fundName} transaction details deal sizes currency lead arrangers co-investors syndication`,
+      `${fundName} credit deals use of proceeds refinancing growth capital acquisition financing`
+    ]
+
+    console.log('Stage 4: Analyzing recent transactions...')
+    const dealResults = await Promise.all(dealQueries.map(query => searchWithPerplexity(query)))
+
+    // Stage 5: Competitive Intelligence
+    const competitiveQueries = [
+      `${fundName} competitors private credit market peers direct lending firms comparison`,
+      `${fundName} market position ranking credit market share competitive advantages differentiators`,
+      `private credit industry landscape ${fundName} competitive positioning market trends`,
+      `${fundName} competitive analysis strengths weaknesses market reputation client feedback`
+    ]
+
+    console.log('Stage 5: Competitive intelligence gathering...')
+    const competitiveResults = await Promise.all(competitiveQueries.map(query => searchWithPerplexity(query)))
+
+    // Stage 6: Performance Metrics and Industry Analysis
+    const performanceQueries = [
+      `${fundName} portfolio performance metrics total capital deployed number of investments average deal size`,
+      `${fundName} sector focus industry allocation geographic distribution investment patterns`,
+      `${fundName} credit portfolio quality default rates write-offs performance statistics`,
+      `${fundName} fund raising success investor base LP relationships institutional investors`
+    ]
+
+    console.log('Stage 6: Performance and industry analysis...')
+    const performanceResults = await Promise.all(performanceQueries.map(query => searchWithPerplexity(query)))
+
+    // Combine all research stages
+    const allResults = [
+      '=== BASIC COMPANY INFORMATION ===',
+      ...basicInfoResults,
+      '\n=== FUND INFORMATION ===',
+      ...fundResults,
+      '\n=== TEAM INFORMATION ===',
+      ...teamResults,
+      '\n=== TRANSACTION ANALYSIS ===',
+      ...dealResults,
+      '\n=== COMPETITIVE INTELLIGENCE ===',
+      ...competitiveResults,
+      '\n=== PERFORMANCE METRICS ===',
+      ...performanceResults
+    ]
+
+    const combinedResearchData = allResults.join('\n\n---\n\n')
+    console.log('Advanced research completed, total data length:', combinedResearchData.length)
+
+    // Step 4: Enhanced AI Analysis and Data Extraction
+    console.log('Step 4: Performing enhanced AI analysis...')
+    const enhancedAnalysis = await performEnhancedAnalysis(combinedResearchData, fundName)
+
+    // Step 5: Generate comprehensive structured report using OpenAI
+    console.log('Step 5: Generating final structured report...')
+    const structuredReport = await generateStructuredReport(enhancedAnalysis, fundName)
 
     // Step 5: Save to database cache (if Supabase is configured)
     if (supabaseConfigured) {

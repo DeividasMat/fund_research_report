@@ -4,112 +4,179 @@ export const demoFundData = {
     fundName: "KKR & Co. Inc.",
     address: "9 West 57th Street, New York, NY 10019, United States",
     contactEmail: "info@kkr.com",
+    website: "https://www.kkr.com/credit",
+    phone: "+1 (212) 750-8300",
     investmentThesis: "KKR Credit focuses on direct lending and credit solutions across North America and Europe. The firm specializes in senior secured lending, unitranche financing, and opportunistic credit investments. KKR Credit targets middle-market companies with predictable cash flows and strong management teams, providing flexible capital solutions tailored to borrower needs.",
+    aum: "$75 billion",
+    foundedYear: "1976",
+    headquarters: "New York, NY",
+    officeLocations: ["New York", "London", "Hong Kong", "Tokyo", "Sydney", "Paris", "Mumbai"],
     funds: [
       {
         name: "KKR North America Credit Partners",
         strategy: "Direct lending and senior debt",
-        raisedDate: "2023",
-        size: "$6.5 billion"
+        raisedDate: "2023-06-15",
+        size: "$6.5 billion",
+        targetSize: "$6.0 billion",
+        status: "Closed",
+        vintageYear: "2023",
+        closingDate: "2023-06-15",
+        fundNumber: "VII"
       },
       {
         name: "KKR Credit Opportunities Fund",
         strategy: "Opportunistic credit investments",
-        raisedDate: "2022",
-        size: "$4.2 billion"
+        raisedDate: "2022-11-20",
+        size: "$4.2 billion",
+        targetSize: "$4.0 billion",
+        status: "Closed",
+        vintageYear: "2022",
+        closingDate: "2022-11-20",
+        fundNumber: "III"
       },
       {
         name: "KKR European Credit Fund",
         strategy: "European direct lending",
-        raisedDate: "2021",
-        size: "$3.8 billion"
+        raisedDate: "2021-09-30",
+        size: "$3.8 billion",
+        targetSize: "$3.5 billion",
+        status: "Closed",
+        vintageYear: "2021",
+        closingDate: "2021-09-30",
+        fundNumber: "IV"
       }
     ],
     teamMembers: [
       {
         name: "Chris Sheldon",
         position: "Global Head of Credit",
-        experience: "Leads KKR's global credit platform with over 20 years of credit investment experience. Previously worked at Goldman Sachs."
+        email: "chris.sheldon@kkr.com",
+        phone: "+1 (212) 750-8350",
+        linkedin: "https://linkedin.com/in/chrissheldon",
+        experience: "Leads KKR's global credit platform with over 20 years of credit investment experience. Previously worked at Goldman Sachs.",
+        education: "MBA Harvard Business School, BS Finance NYU Stern",
+        previousCompanies: ["Goldman Sachs", "Deutsche Bank"],
+        yearsAtFirm: "15 years"
       },
       {
         name: "Avi Wiesel",
         position: "Head of North America Credit",
-        experience: "Oversees KKR's North American credit investments with extensive experience in direct lending and leveraged finance."
+        email: "avi.wiesel@kkr.com",
+        phone: "+1 (212) 750-8360",
+        linkedin: "https://linkedin.com/in/aviwiesel",
+        experience: "Oversees KKR's North American credit investments with extensive experience in direct lending and leveraged finance.",
+        education: "MBA Wharton, BA Economics Princeton",
+        previousCompanies: ["Blackstone", "Morgan Stanley"],
+        yearsAtFirm: "12 years"
       },
       {
         name: "Nat Zilkha",
         position: "Managing Director, Credit",
-        experience: "Focuses on middle-market direct lending transactions with over 15 years of credit investment experience."
+        email: "nat.zilkha@kkr.com",
+        phone: "+1 (212) 750-8370",
+        linkedin: "https://linkedin.com/in/natzilkha",
+        experience: "Focuses on middle-market direct lending transactions with over 15 years of credit investment experience.",
+        education: "MBA Columbia Business School, BS Yale",
+        previousCompanies: ["Apollo Global Management", "Credit Suisse"],
+        yearsAtFirm: "8 years"
       },
       {
         name: "Alex Dibelius",
         position: "Head of European Credit",
-        experience: "Leads KKR's European credit activities with deep expertise in European middle-market lending."
+        email: "alex.dibelius@kkr.com",
+        phone: "+44 20 7659 6600",
+        linkedin: "https://linkedin.com/in/alexdibelius",
+        experience: "Leads KKR's European credit activities with deep expertise in European middle-market lending.",
+        education: "MBA INSEAD, MS Finance London School of Economics",
+        previousCompanies: ["Goldman Sachs", "Barclays"],
+        yearsAtFirm: "10 years"
       },
       {
         name: "Derek Thompson",
         position: "Managing Director, Credit Opportunities",
-        experience: "Specializes in opportunistic credit investments and distressed credit situations with 18+ years of experience."
+        email: "derek.thompson@kkr.com",
+        phone: "+1 (212) 750-8380",
+        linkedin: "https://linkedin.com/in/derekthompson",
+        experience: "Specializes in opportunistic credit investments and distressed credit situations with 18+ years of experience.",
+        education: "MBA Stanford, BS Finance University of Chicago",
+        previousCompanies: ["Oaktree Capital", "Centerbridge Partners"],
+        yearsAtFirm: "7 years"
       }
     ],
     recentDeals: [
       {
         company: "MedTech Solutions",
         sector: "Healthcare Technology",
-        date: "2024-02",
+        date: "2024-02-15",
         dealType: "Senior secured term loan",
-        amount: "$450 million"
+        amount: "$450 million",
+        currency: "USD",
+        description: "Acquisition financing for medical device platform",
+        leadArrangers: ["KKR Credit"],
+        coInvestors: ["Apollo Credit", "Blackstone Credit"],
+        use_of_proceeds: "Acquisition and growth capital"
       },
       {
         company: "CloudFirst Software",
         sector: "Software",
-        date: "2023-11",
+        date: "2023-11-20",
         dealType: "Unitranche financing",
-        amount: "$325 million"
+        amount: "$325 million",
+        currency: "USD",
+        description: "Growth capital for SaaS platform expansion",
+        leadArrangers: ["KKR Credit"],
+        coInvestors: ["Owl Rock", "Golub Capital"],
+        use_of_proceeds: "Growth capital and working capital"
       },
       {
         company: "Industrial Services Group",
         sector: "Industrial Services",
-        date: "2023-09",
+        date: "2023-09-10",
         dealType: "Direct lending facility",
-        amount: "$280 million"
+        amount: "$280 million",
+        currency: "USD",
+        description: "Refinancing and expansion capital",
+        leadArrangers: ["KKR Credit"],
+        coInvestors: ["Ares Management"],
+        use_of_proceeds: "Refinancing existing debt and expansion"
       },
       {
         company: "Retail Analytics Corp",
         sector: "Technology",
-        date: "2023-06",
+        date: "2023-06-05",
         dealType: "Senior debt financing",
-        amount: "$200 million"
+        amount: "$200 million",
+        currency: "USD",
+        description: "Technology platform acquisition financing",
+        leadArrangers: ["KKR Credit"],
+        coInvestors: ["TPG Credit"],
+        use_of_proceeds: "Acquisition financing"
       },
       {
         company: "Healthcare Partners",
         sector: "Healthcare Services",
-        date: "2023-03",
+        date: "2023-03-22",
         dealType: "Leveraged loan",
-        amount: "$380 million"
-      },
-      {
-        company: "TechFlow Logistics",
-        sector: "Transportation",
-        date: "2022-12",
-        dealType: "Term loan B",
-        amount: "$165 million"
-      },
-      {
-        company: "Digital Marketing Pro",
-        sector: "Marketing Services",
-        date: "2022-09",
-        dealType: "Unitranche credit",
-        amount: "$125 million"
-      },
-      {
-        company: "Manufacturing Plus",
-        sector: "Manufacturing",
-        date: "2022-05",
-        dealType: "Senior secured credit",
-        amount: "$240 million"
+        amount: "$380 million",
+        currency: "USD",
+        description: "Healthcare services consolidation financing",
+        leadArrangers: ["KKR Credit"],
+        coInvestors: ["Blue Owl Capital", "Antares Capital"],
+        use_of_proceeds: "Acquisition and consolidation"
       }
-    ]
+    ],
+    competitiveAnalysis: {
+      mainCompetitors: ["Apollo Global Management", "Blackstone Credit", "Ares Management", "Owl Rock", "Golub Capital", "TPG Credit"],
+      marketPosition: "Top 3 direct lending platform globally with strong brand recognition and extensive deal flow through private equity relationships",
+      differentiators: ["Integrated private equity platform", "Global presence across multiple regions", "Deep operational expertise", "Technology-enabled origination platform"]
+    },
+    performanceMetrics: {
+      totalDeployed: "$45 billion",
+      numberOfInvestments: "450+",
+      averageDealSize: "$150 million",
+      geographicFocus: ["North America", "Europe", "Asia-Pacific"],
+      sectorFocus: ["Technology", "Healthcare", "Business Services", "Manufacturing", "Consumer", "Industrial"]
+    }
   },
   "BLACKSTONE": {
     fundName: "Blackstone Inc.",
