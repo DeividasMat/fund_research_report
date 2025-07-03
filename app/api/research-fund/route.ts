@@ -52,7 +52,7 @@ async function searchWithPerplexity(query: string): Promise<string> {
         messages: [
           {
             role: 'system',
-            content: 'You are a financial research assistant specializing in private equity funds. Provide detailed, accurate, and up-to-date information about private equity firms, their investment strategies, team members, and recent deals. Always cite sources when possible.'
+            content: 'You are a financial research assistant specializing in private credit funds. Provide detailed, accurate, and up-to-date information about private credit firms, their direct lending strategies, credit investment teams, and recent credit transactions. Always cite sources when possible.'
           },
           {
             role: 'user',
@@ -84,7 +84,7 @@ async function generateStructuredReport(rawData: string, fundName: string): Prom
     }
 
     const prompt = `
-Based on the following research data about the private equity fund "${fundName}", create a comprehensive structured report in JSON format. 
+Based on the following research data about the private credit fund "${fundName}", create a comprehensive structured report in JSON format focused on private credit activities. 
 
 Research Data:
 ${rawData}
@@ -94,11 +94,11 @@ Please create a JSON object with the following structure:
   "fundName": "Official fund name",
   "address": "Main office address",
   "contactEmail": "Contact email if available",
-  "investmentThesis": "Detailed investment thesis and strategy (2-3 sentences)",
+  "investmentThesis": "Detailed private credit investment strategy and focus (2-3 sentences)",
   "funds": [
     {
-      "name": "Fund name",
-      "strategy": "Investment strategy",
+      "name": "Credit fund name",
+      "strategy": "Private credit strategy (direct lending, distressed, etc.)",
       "raisedDate": "Date raised",
       "size": "Fund size"
     }
@@ -106,29 +106,30 @@ Please create a JSON object with the following structure:
   "teamMembers": [
     {
       "name": "Full name",
-      "position": "Position/title",
-      "experience": "Brief background (1-2 sentences)"
+      "position": "Position/title (focus on credit team)",
+      "experience": "Brief background in private credit (1-2 sentences)"
     }
   ],
   "recentDeals": [
     {
-      "company": "Portfolio company name",
+      "company": "Borrower company name",
       "sector": "Industry sector",
-      "date": "Deal date",
-      "dealType": "Type of investment",
-      "amount": "Deal amount if available"
+      "date": "Transaction date",
+      "dealType": "Type of credit (direct lending, unitranche, etc.)",
+      "amount": "Credit facility amount if available"
     }
   ]
 }
 
 Requirements:
-- Include at least 3-5 team members if available
-- Include at least 5-10 recent deals from the last 3 years if available
-- Include multiple funds if the firm manages several
+- Focus specifically on PRIVATE CREDIT activities, not general private equity
+- Include at least 3-5 team members from the private credit division if available
+- Include at least 5-10 recent private credit deals/transactions from the last 3 years if available
+- Include multiple private credit funds if the firm manages several
 - Use "Not available" if specific information is not found
 - Ensure all data is accurate and based on the research provided
-- Focus on deals from 2021-2024
-- Make the investment thesis comprehensive and well-written
+- Focus on private credit transactions from 2021-2024 (direct lending, unitranche, etc.)
+- Make the investment thesis focused on private credit strategy and approach
 
 Return only the JSON object, no additional text.
 `
@@ -138,7 +139,7 @@ Return only the JSON object, no additional text.
       messages: [
         {
           role: 'system',
-          content: 'You are a financial analyst specializing in private equity research. You create structured, comprehensive reports based on research data. Always return valid JSON only.'
+          content: 'You are a financial analyst specializing in private credit research. You create structured, comprehensive reports focused on private credit activities, direct lending, and credit investment strategies. Always return valid JSON only.'
         },
         {
           role: 'user',
@@ -236,11 +237,11 @@ export async function POST(request: NextRequest) {
     console.log('Performing live research for:', fundName)
     
     const searchQueries = [
-      `${fundName} private equity fund company information address contact email website`,
-      `${fundName} private equity investment thesis strategy focus sectors`,
-      `${fundName} private equity funds portfolio AUM assets under management fund sizes`,
-      `${fundName} private equity team members leadership partners managing directors`,
-      `${fundName} private equity recent deals investments acquisitions 2021 2022 2023 2024 portfolio companies`
+      `${fundName} private credit fund company information address contact email website`,
+      `${fundName} private credit investment strategy direct lending credit funds focus`,
+      `${fundName} private credit funds portfolio AUM credit fund sizes raised dates`,
+      `${fundName} private credit team members leadership credit investment professionals`,
+      `${fundName} private credit recent deals direct lending transactions 2021 2022 2023 2024 credit investments`
     ]
 
     // Execute all searches in parallel for better performance

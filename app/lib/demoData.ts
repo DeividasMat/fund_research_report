@@ -4,110 +4,110 @@ export const demoFundData = {
     fundName: "KKR & Co. Inc.",
     address: "9 West 57th Street, New York, NY 10019, United States",
     contactEmail: "info@kkr.com",
-    investmentThesis: "KKR focuses on leveraged buyouts, growth equity, and credit investments across multiple sectors globally. The firm emphasizes operational expertise and long-term value creation through strategic partnerships with management teams. KKR targets companies with strong market positions, sustainable competitive advantages, and potential for operational improvements.",
+    investmentThesis: "KKR Credit focuses on direct lending and credit solutions across North America and Europe. The firm specializes in senior secured lending, unitranche financing, and opportunistic credit investments. KKR Credit targets middle-market companies with predictable cash flows and strong management teams, providing flexible capital solutions tailored to borrower needs.",
     funds: [
       {
-        name: "KKR North America Fund XIII",
-        strategy: "Large-cap buyouts",
+        name: "KKR North America Credit Partners",
+        strategy: "Direct lending and senior debt",
+        raisedDate: "2023",
+        size: "$6.5 billion"
+      },
+      {
+        name: "KKR Credit Opportunities Fund",
+        strategy: "Opportunistic credit investments",
         raisedDate: "2022",
-        size: "$19.0 billion"
+        size: "$4.2 billion"
       },
       {
-        name: "KKR Growth Fund",
-        strategy: "Growth equity",
+        name: "KKR European Credit Fund",
+        strategy: "European direct lending",
         raisedDate: "2021",
-        size: "$4.0 billion"
-      },
-      {
-        name: "KKR Asian Fund IV",
-        strategy: "Asian buyouts",
-        raisedDate: "2020",
-        size: "$15.0 billion"
+        size: "$3.8 billion"
       }
     ],
     teamMembers: [
       {
-        name: "Henry Kravis",
-        position: "Co-Founder & Co-Executive Chairman",
-        experience: "Co-founded KKR in 1976 and has over 45 years of private equity experience. Previously worked at Bear Stearns."
+        name: "Chris Sheldon",
+        position: "Global Head of Credit",
+        experience: "Leads KKR's global credit platform with over 20 years of credit investment experience. Previously worked at Goldman Sachs."
       },
       {
-        name: "George Roberts",
-        position: "Co-Founder & Co-Executive Chairman",
-        experience: "Co-founded KKR in 1976 alongside Henry Kravis. Pioneer in the leveraged buyout industry with extensive experience."
+        name: "Avi Wiesel",
+        position: "Head of North America Credit",
+        experience: "Oversees KKR's North American credit investments with extensive experience in direct lending and leveraged finance."
       },
       {
-        name: "Scott Nuttall",
-        position: "Co-Chief Executive Officer",
-        experience: "Joined KKR in 1996 and has been instrumental in the firm's global expansion and diversification strategy."
+        name: "Nat Zilkha",
+        position: "Managing Director, Credit",
+        experience: "Focuses on middle-market direct lending transactions with over 15 years of credit investment experience."
       },
       {
-        name: "Joseph Bae",
-        position: "Co-Chief Executive Officer",
-        experience: "Joined KKR in 1996 and leads the firm's Asian operations and global private equity business."
+        name: "Alex Dibelius",
+        position: "Head of European Credit",
+        experience: "Leads KKR's European credit activities with deep expertise in European middle-market lending."
       },
       {
-        name: "Vance Kershner",
-        position: "Managing Director",
-        experience: "Leads KKR's technology, media, and telecommunications investments with over 20 years of experience."
+        name: "Derek Thompson",
+        position: "Managing Director, Credit Opportunities",
+        experience: "Specializes in opportunistic credit investments and distressed credit situations with 18+ years of experience."
       }
     ],
     recentDeals: [
       {
-        company: "Cotiviti",
+        company: "MedTech Solutions",
         sector: "Healthcare Technology",
-        date: "2023-12",
-        dealType: "Acquisition",
-        amount: "$8.2 billion"
+        date: "2024-02",
+        dealType: "Senior secured term loan",
+        amount: "$450 million"
       },
       {
-        company: "Cloudera",
+        company: "CloudFirst Software",
         sector: "Software",
-        date: "2023-08",
-        dealType: "Take-private",
-        amount: "$5.3 billion"
+        date: "2023-11",
+        dealType: "Unitranche financing",
+        amount: "$325 million"
       },
       {
-        company: "Telecom Italia",
-        sector: "Telecommunications",
-        date: "2023-05",
-        dealType: "Strategic Investment",
-        amount: "$2.8 billion"
+        company: "Industrial Services Group",
+        sector: "Industrial Services",
+        date: "2023-09",
+        dealType: "Direct lending facility",
+        amount: "$280 million"
       },
       {
-        company: "Academy Sports + Outdoors",
-        sector: "Retail",
-        date: "2022-11",
-        dealType: "Secondary Offering",
-        amount: "$1.8 billion"
+        company: "Retail Analytics Corp",
+        sector: "Technology",
+        date: "2023-06",
+        dealType: "Senior debt financing",
+        amount: "$200 million"
       },
       {
-        company: "Envision Healthcare",
+        company: "Healthcare Partners",
         sector: "Healthcare Services",
-        date: "2022-07",
-        dealType: "Acquisition",
-        amount: "$9.9 billion"
+        date: "2023-03",
+        dealType: "Leveraged loan",
+        amount: "$380 million"
       },
       {
-        company: "Gibson Dunn",
-        sector: "Legal Services",
-        date: "2022-03",
-        dealType: "Growth Investment",
-        amount: "$1.2 billion"
+        company: "TechFlow Logistics",
+        sector: "Transportation",
+        date: "2022-12",
+        dealType: "Term loan B",
+        amount: "$165 million"
       },
       {
-        company: "Contentsquare",
-        sector: "Software",
-        date: "2021-12",
-        dealType: "Growth Investment",
-        amount: "$500 million"
+        company: "Digital Marketing Pro",
+        sector: "Marketing Services",
+        date: "2022-09",
+        dealType: "Unitranche credit",
+        amount: "$125 million"
       },
       {
-        company: "Coty Inc.",
-        sector: "Consumer Goods",
-        date: "2021-09",
-        dealType: "Strategic Partnership",
-        amount: "$1.0 billion"
+        company: "Manufacturing Plus",
+        sector: "Manufacturing",
+        date: "2022-05",
+        dealType: "Senior secured credit",
+        amount: "$240 million"
       }
     ]
   },
@@ -115,110 +115,110 @@ export const demoFundData = {
     fundName: "Blackstone Inc.",
     address: "345 Park Avenue, New York, NY 10154, United States",
     contactEmail: "info@blackstone.com",
-    investmentThesis: "Blackstone pursues a diversified investment strategy across private equity, real estate, hedge funds, and credit. The firm focuses on sectors with strong secular growth trends and companies with scalable business models. Blackstone emphasizes operational improvements and leverages its global platform to create value for portfolio companies.",
+    investmentThesis: "Blackstone Credit focuses on providing financing solutions to middle-market and large-cap companies through direct lending and opportunistic credit strategies. The firm leverages its global platform and deep sector expertise to structure flexible credit solutions across various industries with emphasis on asset-backed and cash flow-based lending.",
     funds: [
       {
-        name: "Blackstone Capital Partners VIII",
-        strategy: "Large-cap buyouts",
+        name: "Blackstone Strategic Credit Fund",
+        strategy: "Direct lending and senior debt",
+        raisedDate: "2023",
+        size: "$8.5 billion"
+      },
+      {
+        name: "Blackstone Opportunistic Credit Fund",
+        strategy: "Opportunistic and distressed credit",
         raisedDate: "2022",
-        size: "$26.0 billion"
+        size: "$5.2 billion"
       },
       {
-        name: "Blackstone Real Estate Partners X",
-        strategy: "Real estate",
+        name: "Blackstone European Credit Fund",
+        strategy: "European direct lending",
         raisedDate: "2021",
-        size: "$30.4 billion"
-      },
-      {
-        name: "Blackstone Growth",
-        strategy: "Growth equity",
-        raisedDate: "2020",
-        size: "$4.5 billion"
+        size: "$3.8 billion"
       }
     ],
     teamMembers: [
       {
-        name: "Stephen Schwarzman",
-        position: "Chairman & CEO",
-        experience: "Co-founded Blackstone in 1985 and has built it into one of the world's largest alternative asset managers. Previously worked at Lehman Brothers."
+        name: "Bennett Goodman",
+        position: "Global Head of Credit",
+        experience: "Co-founded Blackstone's credit business and leads global credit investment activities with over 25 years of credit experience."
       },
       {
-        name: "Jonathan Gray",
-        position: "President & COO",
-        experience: "Joined Blackstone in 1992 and leads the firm's real estate business. Key architect of Blackstone's global expansion strategy."
+        name: "Steve Lasota",
+        position: "Global Head of Direct Lending",
+        experience: "Oversees Blackstone's direct lending platform with extensive experience in middle-market credit investments and structured finance."
       },
       {
-        name: "Joseph Baratta",
-        position: "Global Head of Private Equity",
-        experience: "Joined Blackstone in 1998 and leads the firm's flagship private equity business with extensive buyout experience."
+        name: "Dwight Scott",
+        position: "Head of Credit Origination",
+        experience: "Leads credit deal sourcing and client relationships with deep expertise in leveraged finance and direct lending."
       },
       {
-        name: "Kathleen McCarthy",
-        position: "Global Co-Head of Real Estate",
-        experience: "Joined Blackstone in 1997 and co-leads the world's largest real estate investment platform."
+        name: "Michael Zawadzki",
+        position: "Managing Director, Credit",
+        experience: "Focuses on large-cap credit investments and opportunistic credit strategies with 20+ years of experience."
       },
       {
-        name: "David Blitzer",
-        position: "Senior Managing Director",
-        experience: "Leads Blackstone's tactical opportunities investments and has over 25 years of private equity experience."
+        name: "Craig Farr",
+        position: "Head of European Credit",
+        experience: "Leads Blackstone's European credit activities with extensive experience in European leveraged finance markets."
       }
     ],
     recentDeals: [
       {
-        company: "Emerson Electric",
+        company: "Industrial Equipment Corp",
         sector: "Industrial Technology",
-        date: "2023-11",
-        dealType: "Carve-out",
-        amount: "$14.0 billion"
+        date: "2024-01",
+        dealType: "Senior secured facility",
+        amount: "$675 million"
       },
       {
-        company: "Jersey Mike's",
+        company: "Restaurant Holdings LLC",
         sector: "Restaurants",
-        date: "2023-08",
-        dealType: "Growth Investment",
-        amount: "$8.0 billion"
+        date: "2023-10",
+        dealType: "Unitranche financing",
+        amount: "$425 million"
       },
       {
-        company: "Certified Collectibles Group",
-        sector: "Collectibles",
-        date: "2023-06",
-        dealType: "Acquisition",
-        amount: "$3.0 billion"
+        company: "Authentication Services",
+        sector: "Business Services",
+        date: "2023-07",
+        dealType: "Direct lending facility",
+        amount: "$320 million"
       },
       {
-        company: "Simply Good Foods",
+        company: "Health Foods Co",
         sector: "Consumer Goods",
-        date: "2022-12",
-        dealType: "Strategic Investment",
-        amount: "$2.2 billion"
+        date: "2023-04",
+        dealType: "Term loan facility",
+        amount: "$285 million"
       },
       {
-        company: "Bumble Inc.",
+        company: "Social Tech Platform",
         sector: "Technology",
-        date: "2022-09",
-        dealType: "Secondary Investment",
-        amount: "$1.7 billion"
+        date: "2023-01",
+        dealType: "Senior debt financing",
+        amount: "$190 million"
       },
       {
-        company: "Festivals Global",
+        company: "Event Management Group",
         sector: "Entertainment",
-        date: "2022-05",
-        dealType: "Acquisition",
-        amount: "$1.5 billion"
+        date: "2022-11",
+        dealType: "Leveraged loan",
+        amount: "$155 million"
       },
       {
-        company: "Sphera Solutions",
+        company: "Analytics Software Inc",
         sector: "Software",
-        date: "2021-11",
-        dealType: "Growth Investment",
-        amount: "$900 million"
+        date: "2022-08",
+        dealType: "Growth debt facility",
+        amount: "$220 million"
       },
       {
-        company: "Copeland",
+        company: "HVAC Solutions",
         sector: "Industrial",
-        date: "2021-08",
-        dealType: "Carve-out",
-        amount: "$8.2 billion"
+        date: "2022-04",
+        dealType: "Senior secured credit",
+        amount: "$340 million"
       }
     ]
   },

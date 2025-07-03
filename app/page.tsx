@@ -91,12 +91,12 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Private Equity
+            Private Credit
             <span className="text-primary-600 block">Fund Intelligence</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Get comprehensive insights on private equity funds including investment thesis, 
-            team composition, fund strategies, and recent deal activity.
+            Get comprehensive insights on private credit funds including direct lending strategies, 
+            credit team composition, fund portfolios, and recent credit transactions.
           </p>
 
           {/* Search Bar */}
@@ -110,7 +110,7 @@ export default function Home() {
                   type="text"
                   value={fundName}
                   onChange={(e) => setFundName(e.target.value)}
-                  placeholder="Enter private equity fund name (e.g., KKR, Blackstone, Apollo)"
+                  placeholder="Enter private credit fund name (e.g., KKR Credit, Blackstone Credit, Apollo Credit)"
                   className="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 transition-all duration-200"
                   disabled={loading}
                 />
@@ -164,40 +164,40 @@ export default function Home() {
                 <div className="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Building2 className="text-primary-600" size={24} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Fund Details</h3>
-                <p className="text-gray-600">Name, address, contact information, and fund portfolio overview</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Credit Fund Details</h3>
+                <p className="text-gray-600">Name, address, contact information, and private credit fund portfolio</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div className="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <TrendingUp className="text-primary-600" size={24} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Investment Thesis</h3>
-                <p className="text-gray-600">Strategic focus, sector preferences, and investment philosophy</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Credit Investment Strategy</h3>
+                <p className="text-gray-600">Direct lending focus, sector preferences, and credit investment approach</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div className="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Users className="text-primary-600" size={24} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Team Members</h3>
-                <p className="text-gray-600">Key personnel, positions, and professional backgrounds</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Credit Team</h3>
+                <p className="text-gray-600">Credit professionals, positions, and private credit experience</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div className="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <FileText className="text-primary-600" size={24} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Fund Strategies</h3>
-                <p className="text-gray-600">Portfolio strategies, fund sizes, and raising timeline</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Credit Fund Strategies</h3>
+                <p className="text-gray-600">Direct lending strategies, credit fund sizes, and raising timeline</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div className="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <Calendar className="text-primary-600" size={24} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Deals</h3>
-                <p className="text-gray-600">Last 3 years of investment activity and portfolio companies</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Credit Transactions</h3>
+                <p className="text-gray-600">Last 3 years of direct lending and credit investment activity</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
