@@ -379,90 +379,130 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Step 3: Perform advanced multi-stage research
+    // Step 3: Perform advanced multi-stage research with enhanced methodology
     console.log('Performing advanced multi-stage research for:', fundName)
     
     try {
-      // Stage 1: Basic Company Information
+      // Stage 1: Company Foundation & Corporate Intelligence
       const basicInfoQueries = [
-        `${fundName} private credit fund headquarters address phone website contact information`,
-        `${fundName} private credit firm founded year history background AUM assets under management`,
-        `${fundName} office locations global presence regional offices contact details`,
-        `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach`
+        `${fundName} private credit fund headquarters address phone website contact information CEO managing partner`,
+        `${fundName} private credit firm founded year history background AUM assets under management total capital raised`,
+        `${fundName} office locations global presence regional offices contact details international footprint`,
+        `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach investment thesis`,
+        `${fundName} regulatory filings SEC registrations investment advisor registrations compliance history`,
+        `${fundName} corporate structure parent company subsidiaries affiliates ownership management company`
       ]
 
-      console.log('Stage 1: Gathering basic company information...')
+      console.log('Stage 1: Gathering company foundation & corporate intelligence...')
       const basicInfoResults = await Promise.all(basicInfoQueries.map(query => searchWithPerplexity(query)))
 
-    // Stage 2: Fund-Specific Information
-    const fundQueries = [
-      `${fundName} private credit funds list all credit funds raised fund sizes target sizes vintage years`,
-      `${fundName} credit fund closing dates final closing first closing fund raising timeline`,
-      `${fundName} credit fund strategies senior debt unitranche mezzanine distressed opportunistic`,
-      `${fundName} fund performance metrics IRR returns deployment rate portfolio statistics`
-    ]
+      // Stage 2: Fund Portfolio & Capital Structure Analysis
+      const fundQueries = [
+        `${fundName} private credit funds list all credit funds raised fund sizes target sizes vintage years complete portfolio`,
+        `${fundName} credit fund closing dates final closing first closing fund raising timeline fundraising history`,
+        `${fundName} credit fund strategies senior debt unitranche mezzanine distressed opportunistic fund terms fee structure`,
+        `${fundName} fund performance metrics IRR returns deployment rate portfolio statistics performance track record`,
+        `${fundName} investor base limited partners institutional investors pension funds endowments insurance companies`,
+        `${fundName} fund economics management fees carried interest fee structure investor terms conditions`
+      ]
 
-    console.log('Stage 2: Gathering detailed fund information...')
-    const fundResults = await Promise.all(fundQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 2: Gathering fund portfolio & capital structure analysis...')
+      const fundResults = await Promise.all(fundQueries.map(query => searchWithPerplexity(query)))
 
-    // Stage 3: Team Member Deep Dive
-    const teamQueries = [
-      `${fundName} credit team members leadership partners managing directors senior professionals`,
-      `${fundName} credit team contact information email addresses direct contact LinkedIn profiles`,
-      `${fundName} credit professionals education background experience previous companies career history`,
-      `${fundName} senior credit team years at firm tenure leadership experience credit markets`
-    ]
+      // Stage 3: Leadership & Team Intelligence
+      const teamQueries = [
+        `${fundName} credit team members leadership partners managing directors senior professionals complete team roster`,
+        `${fundName} credit team contact information email addresses direct contact LinkedIn profiles phone numbers`,
+        `${fundName} credit professionals education background experience previous companies career history detailed biographies`,
+        `${fundName} senior credit team years at firm tenure leadership experience credit markets investment committee`,
+        `${fundName} team compensation structure carried interest allocations profit sharing partner promotions`,
+        `${fundName} advisory board members industry experts external advisors strategic relationships board composition`
+      ]
 
-    console.log('Stage 3: Researching team members and contacts...')
-    const teamResults = await Promise.all(teamQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 3: Researching leadership & team intelligence...')
+      const teamResults = await Promise.all(teamQueries.map(query => searchWithPerplexity(query)))
 
-    // Stage 4: Recent Transactions Analysis
-    const dealQueries = [
-      `${fundName} recent credit transactions 2023 2024 direct lending deals senior debt unitranche`,
-      `${fundName} credit investments 2022 2021 leveraged loans term loan B facilities borrower companies`,
-      `${fundName} transaction details deal sizes currency lead arrangers co-investors syndication`,
-      `${fundName} credit deals use of proceeds refinancing growth capital acquisition financing`
-    ]
+      // Stage 4: Transaction Analysis & Deal Flow Intelligence
+      const dealQueries = [
+        `${fundName} recent credit transactions 2023 2024 direct lending deals senior debt unitranche detailed transaction list`,
+        `${fundName} credit investments 2022 2021 leveraged loans term loan B facilities borrower companies portfolio companies`,
+        `${fundName} transaction details deal sizes currency lead arrangers co-investors syndication partners deal structures`,
+        `${fundName} credit deals use of proceeds refinancing growth capital acquisition financing working capital bridge loans`,
+        `${fundName} notable transactions landmark deals large transactions significant investments case studies`,
+        `${fundName} deal sourcing origination capabilities relationship lending sponsor relationships investment banking partnerships`
+      ]
 
-    console.log('Stage 4: Analyzing recent transactions...')
-    const dealResults = await Promise.all(dealQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 4: Analyzing transactions & deal flow intelligence...')
+      const dealResults = await Promise.all(dealQueries.map(query => searchWithPerplexity(query)))
 
-    // Stage 5: Competitive Intelligence
-    const competitiveQueries = [
-      `${fundName} competitors private credit market peers direct lending firms comparison`,
-      `${fundName} market position ranking credit market share competitive advantages differentiators`,
-      `private credit industry landscape ${fundName} competitive positioning market trends`,
-      `${fundName} competitive analysis strengths weaknesses market reputation client feedback`
-    ]
+      // Stage 5: Competitive Intelligence & Market Position
+      const competitiveQueries = [
+        `${fundName} competitors private credit market peers direct lending firms comparison competitive landscape`,
+        `${fundName} market position ranking credit market share competitive advantages differentiators unique value proposition`,
+        `private credit industry landscape ${fundName} competitive positioning market trends industry leadership`,
+        `${fundName} competitive analysis strengths weaknesses market reputation client feedback investor perception`,
+        `${fundName} market share direct lending market position industry rankings league tables deal volume`,
+        `${fundName} differentiation factors competitive moat barriers to entry unique capabilities strategic advantages`
+      ]
 
-    console.log('Stage 5: Competitive intelligence gathering...')
-    const competitiveResults = await Promise.all(competitiveQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 5: Competitive intelligence & market position...')
+      const competitiveResults = await Promise.all(competitiveQueries.map(query => searchWithPerplexity(query)))
 
-    // Stage 6: Performance Metrics and Industry Analysis
-    const performanceQueries = [
-      `${fundName} portfolio performance metrics total capital deployed number of investments average deal size`,
-      `${fundName} sector focus industry allocation geographic distribution investment patterns`,
-      `${fundName} credit portfolio quality default rates write-offs performance statistics`,
-      `${fundName} fund raising success investor base LP relationships institutional investors`
-    ]
+      // Stage 6: Performance Metrics & Risk Analysis
+      const performanceQueries = [
+        `${fundName} portfolio performance metrics total capital deployed number of investments average deal size deployment statistics`,
+        `${fundName} sector focus industry allocation geographic distribution investment patterns sector expertise`,
+        `${fundName} credit portfolio quality default rates write-offs performance statistics credit losses realized returns`,
+        `${fundName} fund raising success investor base LP relationships institutional investors fundraising track record`,
+        `${fundName} risk management framework credit analysis underwriting standards portfolio monitoring risk controls`,
+        `${fundName} ESG environmental social governance sustainable investing responsible investing ESG integration`
+      ]
 
-    console.log('Stage 6: Performance and industry analysis...')
-    const performanceResults = await Promise.all(performanceQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 6: Performance metrics & risk analysis...')
+      const performanceResults = await Promise.all(performanceQueries.map(query => searchWithPerplexity(query)))
+
+      // Stage 7: Strategic Relationships & Market Intelligence
+      const relationshipQueries = [
+        `${fundName} strategic partnerships key relationships investment banking partnerships origination sources`,
+        `${fundName} sponsor relationships private equity partnerships strategic alliances co-investment relationships`,
+        `${fundName} technology platform digital capabilities systems infrastructure operational efficiency`,
+        `${fundName} market intelligence thought leadership industry publications research reports white papers`,
+        `${fundName} industry involvement trade associations speaking engagements conference participation leadership roles`,
+        `${fundName} recent news press releases announcements strategic initiatives new hires promotions awards`
+      ]
+
+      console.log('Stage 7: Strategic relationships & market intelligence...')
+      const relationshipResults = await Promise.all(relationshipQueries.map(query => searchWithPerplexity(query)))
+
+      // Stage 8: Regulatory & Compliance Intelligence
+      const regulatoryQueries = [
+        `${fundName} regulatory filings form ADV SEC registrations compliance history regulatory status`,
+        `${fundName} regulatory issues compliance violations enforcement actions regulatory scrutiny`,
+        `${fundName} licensing international regulations global compliance cross-border regulations`,
+        `${fundName} industry regulations AIFMD MiFID II regulatory impact compliance costs regulatory changes`
+      ]
+
+      console.log('Stage 8: Regulatory & compliance intelligence...')
+      const regulatoryResults = await Promise.all(regulatoryQueries.map(query => searchWithPerplexity(query)))
 
     // Combine all research stages
     const allResults = [
-      '=== BASIC COMPANY INFORMATION ===',
+      '=== COMPANY FOUNDATION & CORPORATE INTELLIGENCE ===',
       ...basicInfoResults,
-      '\n=== FUND INFORMATION ===',
+      '\n=== FUND PORTFOLIO & CAPITAL STRUCTURE ANALYSIS ===',
       ...fundResults,
-      '\n=== TEAM INFORMATION ===',
+      '\n=== LEADERSHIP & TEAM INTELLIGENCE ===',
       ...teamResults,
-      '\n=== TRANSACTION ANALYSIS ===',
+      '\n=== TRANSACTION ANALYSIS & DEAL FLOW INTELLIGENCE ===',
       ...dealResults,
-      '\n=== COMPETITIVE INTELLIGENCE ===',
+      '\n=== COMPETITIVE INTELLIGENCE & MARKET POSITION ===',
       ...competitiveResults,
-      '\n=== PERFORMANCE METRICS ===',
-      ...performanceResults
+      '\n=== PERFORMANCE METRICS & RISK ANALYSIS ===',
+      ...performanceResults,
+      '\n=== STRATEGIC RELATIONSHIPS & MARKET INTELLIGENCE ===',
+      ...relationshipResults,
+      '\n=== REGULATORY & COMPLIANCE INTELLIGENCE ===',
+      ...regulatoryResults
     ]
 
     const combinedResearchData = allResults.join('\n\n---\n\n')
