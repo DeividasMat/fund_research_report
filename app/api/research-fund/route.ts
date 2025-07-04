@@ -239,13 +239,27 @@ ENHANCEMENT INSTRUCTIONS:
 
 CRITICAL GAPS TO FILL:
 - If team member emails are missing, provide reasoning or indicate "Not publicly disclosed"
-- If fund sizes are vague, extract exact amounts in millions USD
-- If transaction dates are unclear, provide specific month/year when possible
-- If contact information is partial, complete with available details
-- If competitive analysis is thin, enhance with market positioning insights
-- If office locations lack details, provide full addresses when available
+- If fund sizes are vague, extract exact amounts in millions USD from ANY mention
+- If transaction dates are unclear, provide specific month/year when possible from ANY source
+- If contact information is partial, complete with available details from ANY search result
+- If competitive analysis is thin, enhance with market positioning insights from ALL data
+- If office locations lack details, provide full addresses when available from ANY source
+- If investment thesis is generic, create comprehensive strategy based on ALL information found
+- If private credit team is unclear, identify ALL team members and categorize their roles
+- If deal categorization is missing, classify ALL transactions by type and relevance to credit
 
-Provide a comprehensive, enhanced analysis that maximizes the insights from the raw data. Include all contact details, precise dates, financial metrics, and strategic insights you can extract. Be thorough and leave no information unused.
+COMPREHENSIVE ANALYSIS REQUIREMENTS:
+- EXTRACT every single piece of information from ALL search results
+- CROSS-REFERENCE information between different search sources
+- IDENTIFY patterns and connections across all data points
+- CATEGORIZE everything clearly (credit vs. other activities)
+- PROVIDE context for why certain information might be missing
+- CREATE comprehensive profiles for all team members found
+- ORGANIZE all deals chronologically with clear categorization
+- SYNTHESIZE an overall investment thesis from all available information
+- MAP the firm's complete organizational structure and capabilities
+
+Provide a comprehensive, enhanced analysis that maximizes the insights from ALL the raw data. Include all contact details, precise dates, financial metrics, and strategic insights you can extract. Be thorough and leave no information unused from any source.
 
 Format as detailed analytical text with clear sections for different types of information.
 `
@@ -359,22 +373,26 @@ Please create a comprehensive JSON object with the following structure:
 }
 
 CRITICAL REQUIREMENTS - ADVANCED ANALYSIS:
-- Focus EXCLUSIVELY on PRIVATE CREDIT activities, ignore general private equity
-- Extract MAXIMUM detail from the research data provided
-- Include 5-10+ team members from credit division with ALL available contact details
-- PRIORITIZE finding email addresses, phone numbers, LinkedIn profiles for team members
-- Include 10-15+ recent private credit transactions from 2021-2024 with comprehensive details
-- Include ALL private credit funds managed by the firm with exact dates and sizes
-- Find specific fund closing dates, target sizes, vintage years, fund numbers
-- Extract detailed transaction information: lead arrangers, co-investors, use of proceeds
-- Include competitive analysis and performance metrics from the data
-- Use precise dates, amounts, and contact details when available
+- ANALYZE ALL INFORMATION provided, then CATEGORIZE and FOCUS on private credit activities 
+- Extract MAXIMUM detail from ALL research data provided (funds, deals, team, everything)
+- CATEGORIZE team members: (1) Main management team (2) Private credit/debt specialists
+- Include 10-20+ team members with ALL available contact details, highlighting credit professionals
+- PRIORITIZE finding email addresses, phone numbers, LinkedIn profiles for ALL team members
+- CATEGORIZE ALL transactions: (1) Private credit deals (2) Other investment activities
+- Include 15-25+ transactions from 2019-2024, clearly marking which are credit-related
+- Include ALL funds managed by the firm, categorizing credit vs. other strategies
+- Find specific fund closing dates, target sizes, vintage years, fund numbers for ALL funds
+- Extract detailed transaction information: lead arrangers, co-investors, use of proceeds for ALL deals
+- Include competitive analysis and performance metrics from ALL available data
+- Use precise dates, amounts, and contact details when available from ANY source
 - If email/phone not found, state "Not publicly available" but include all other details
-- Focus on direct lending, unitranche, senior debt, mezzanine, distressed credit
-- Include educational backgrounds and career histories for team members
-- Extract office locations, founding year, total AUM, website, main contacts
-- Analyze competitive positioning and market differentiators
-- Include sector focus, geographic focus, average deal sizes, deployment metrics
+- CATEGORIZE deals: direct lending, unitranche, senior debt, mezzanine, distressed, equity, etc.
+- Include educational backgrounds and career histories for ALL team members found
+- Extract office locations, founding year, total AUM, website, main contacts from ALL data
+- Analyze competitive positioning and market differentiators based on ALL information
+- Include sector focus, geographic focus, average deal sizes, deployment metrics for ALL activities
+- CREATE a comprehensive investment thesis that covers the firm's overall strategy
+- IDENTIFY which team members are responsible for private credit activities specifically
 
 Return only the JSON object, no additional text.
 `
@@ -484,12 +502,12 @@ export async function POST(request: NextRequest) {
     try {
       // Stage 1: Company Foundation & Corporate Intelligence
       const basicInfoQueries = [
-        `${fundName} private credit fund headquarters address phone website contact information CEO managing partner`,
-        `${fundName} private credit firm founded year history background AUM assets under management total capital raised`,
-        `${fundName} office locations global presence regional offices contact details international footprint`,
-        `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach investment thesis`,
-        `${fundName} regulatory filings SEC registrations investment advisor registrations compliance history`,
-        `${fundName} corporate structure parent company subsidiaries affiliates ownership management company`
+        `${fundName} headquarters address phone website contact information CEO managing partner executives leadership`,
+        `${fundName} firm founded year history background AUM assets under management total capital raised`,
+        `${fundName} office locations global presence regional offices contact details international offices`,
+        `${fundName} investment strategy focus sectors geographic focus approach investment thesis philosophy`,
+        `${fundName} SEC filings regulatory registrations form ADV investment advisor compliance history`,
+        `${fundName} corporate structure parent company subsidiaries affiliates ownership about company`
       ]
 
       console.log('Stage 1: Gathering company foundation & corporate intelligence...')
@@ -497,12 +515,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 2: Fund Portfolio & Capital Structure Analysis
       const fundQueries = [
-        `${fundName} private credit funds list all credit funds raised fund sizes target sizes vintage years complete portfolio`,
-        `${fundName} credit fund closing dates final closing first closing fund raising timeline fundraising history`,
-        `${fundName} credit fund strategies senior debt unitranche mezzanine distressed opportunistic fund terms fee structure`,
-        `${fundName} fund performance metrics IRR returns deployment rate portfolio statistics performance track record`,
-        `${fundName} investor base limited partners institutional investors pension funds endowments insurance companies`,
-        `${fundName} fund economics management fees carried interest fee structure investor terms conditions`
+        `${fundName} funds list all funds raised fund sizes target sizes vintage years complete fund portfolio`,
+        `${fundName} fund closing dates final closing first closing fund raising timeline fundraising history`,
+        `${fundName} fund strategies investment approach debt equity credit mezzanine distressed growth buyout`,
+        `${fundName} fund performance metrics IRR returns deployment rate portfolio statistics track record`,
+        `${fundName} investor base limited partners LP institutional investors pension funds endowments`,
+        `${fundName} fund economics management fees carried interest fee structure terms conditions`
       ]
 
       console.log('Stage 2: Gathering fund portfolio & capital structure analysis...')
@@ -510,12 +528,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 3: Leadership & Team Intelligence
       const teamQueries = [
-        `${fundName} credit team members leadership partners managing directors senior professionals complete team roster`,
-        `${fundName} credit team contact information email addresses direct contact LinkedIn profiles phone numbers`,
-        `${fundName} credit professionals education background experience previous companies career history detailed biographies`,
-        `${fundName} senior credit team years at firm tenure leadership experience credit markets investment committee`,
-        `${fundName} team compensation structure carried interest allocations profit sharing partner promotions`,
-        `${fundName} advisory board members industry experts external advisors strategic relationships board composition`
+        `${fundName} team members leadership partners managing directors senior professionals executives complete roster`,
+        `${fundName} team contact information email addresses direct contact LinkedIn profiles phone numbers`,
+        `${fundName} professionals education background experience previous companies career history biographies`,
+        `${fundName} credit team private credit debt lending professionals investment committee members`,
+        `${fundName} senior leadership years at firm tenure experience management team key personnel`,
+        `${fundName} advisory board members industry experts external advisors board composition directors`
       ]
 
       console.log('Stage 3: Researching leadership & team intelligence...')
@@ -523,12 +541,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 4: Transaction Analysis & Deal Flow Intelligence
       const dealQueries = [
-        `${fundName} recent credit transactions 2023 2024 direct lending deals senior debt unitranche detailed transaction list`,
-        `${fundName} credit investments 2022 2021 leveraged loans term loan B facilities borrower companies portfolio companies`,
-        `${fundName} transaction details deal sizes currency lead arrangers co-investors syndication partners deal structures`,
-        `${fundName} credit deals use of proceeds refinancing growth capital acquisition financing working capital bridge loans`,
-        `${fundName} notable transactions landmark deals large transactions significant investments case studies`,
-        `${fundName} deal sourcing origination capabilities relationship lending sponsor relationships investment banking partnerships`
+        `${fundName} recent transactions 2023 2024 deals investments portfolio companies detailed transaction list`,
+        `${fundName} investments 2022 2021 deals transactions financing leveraged buyouts portfolio companies`,
+        `${fundName} transaction details deal sizes amounts currency lead arrangers co-investors syndication partners`,
+        `${fundName} deals investments use of proceeds refinancing growth capital acquisition financing`,
+        `${fundName} notable transactions landmark deals large transactions significant investments case studies news`,
+        `${fundName} deal sourcing origination capabilities relationships sponsor partnerships investment banking`
       ]
 
       console.log('Stage 4: Analyzing transactions & deal flow intelligence...')
@@ -536,12 +554,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 5: Competitive Intelligence & Market Position
       const competitiveQueries = [
-        `${fundName} competitors private credit market peers direct lending firms comparison competitive landscape`,
-        `${fundName} market position ranking credit market share competitive advantages differentiators unique value proposition`,
-        `private credit industry landscape ${fundName} competitive positioning market trends industry leadership`,
+        `${fundName} competitors market peers firms comparison competitive landscape alternative investment`,
+        `${fundName} market position ranking market share competitive advantages differentiators unique value proposition`,
+        `investment industry landscape ${fundName} competitive positioning market trends industry leadership`,
         `${fundName} competitive analysis strengths weaknesses market reputation client feedback investor perception`,
-        `${fundName} market share direct lending market position industry rankings league tables deal volume`,
-        `${fundName} differentiation factors competitive moat barriers to entry unique capabilities strategic advantages`
+        `${fundName} market share position industry rankings league tables deal volume performance`,
+        `${fundName} differentiation factors competitive advantages unique capabilities strategic positioning`
       ]
 
       console.log('Stage 5: Competitive intelligence & market position...')
@@ -549,12 +567,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 6: Performance Metrics & Risk Analysis
       const performanceQueries = [
-        `${fundName} portfolio performance metrics total capital deployed number of investments average deal size deployment statistics`,
-        `${fundName} sector focus industry allocation geographic distribution investment patterns sector expertise`,
-        `${fundName} credit portfolio quality default rates write-offs performance statistics credit losses realized returns`,
-        `${fundName} fund raising success investor base LP relationships institutional investors fundraising track record`,
-        `${fundName} risk management framework credit analysis underwriting standards portfolio monitoring risk controls`,
-        `${fundName} ESG environmental social governance sustainable investing responsible investing ESG integration`
+        `${fundName} portfolio performance metrics total capital deployed number of investments average deal size statistics`,
+        `${fundName} sector focus industry allocation geographic distribution investment patterns expertise`,
+        `${fundName} portfolio performance returns IRR multiples realized performance statistics track record`,
+        `${fundName} fund raising success investor base LP relationships institutional investors fundraising`,
+        `${fundName} risk management framework analysis underwriting standards portfolio monitoring controls`,
+        `${fundName} ESG environmental social governance sustainable investing responsible investing integration`
       ]
 
       console.log('Stage 6: Performance metrics & risk analysis...')
@@ -562,12 +580,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 7: Strategic Relationships & Market Intelligence
       const relationshipQueries = [
-        `${fundName} strategic partnerships key relationships investment banking partnerships origination sources`,
-        `${fundName} sponsor relationships private equity partnerships strategic alliances co-investment relationships`,
-        `${fundName} technology platform digital capabilities systems infrastructure operational efficiency`,
-        `${fundName} market intelligence thought leadership industry publications research reports white papers`,
-        `${fundName} industry involvement trade associations speaking engagements conference participation leadership roles`,
-        `${fundName} recent news press releases announcements strategic initiatives new hires promotions awards`
+        `${fundName} strategic partnerships key relationships banking partnerships origination sources alliances`,
+        `${fundName} sponsor relationships partnerships strategic alliances co-investment relationships`,
+        `${fundName} technology platform digital capabilities systems infrastructure operations`,
+        `${fundName} thought leadership industry publications research reports white papers insights`,
+        `${fundName} industry involvement associations speaking engagements conference participation leadership`,
+        `${fundName} recent news press releases announcements strategic initiatives hires promotions awards`
       ]
 
       console.log('Stage 7: Strategic relationships & market intelligence...')
@@ -586,12 +604,12 @@ export async function POST(request: NextRequest) {
 
       // Stage 9: Deep Contact & Detail Intelligence
       const contactQueries = [
-        `${fundName} senior executives contact details direct email addresses phone numbers LinkedIn profiles social media`,
-        `${fundName} investment team member emails contact information business cards professional profiles`,
-        `${fundName} detailed fund information exact closing dates fund sizes in USD millions specific vintage years`,
-        `${fundName} comprehensive transaction database deal announcements press releases specific amounts dates`,
-        `${fundName} team member educational background MBA schools undergraduate universities professional certifications`,
-        `${fundName} specific office addresses with zip codes phone numbers reception contact information`
+        `${fundName} executives contact details email addresses phone numbers LinkedIn profiles social media`,
+        `${fundName} team member emails contact information business cards professional profiles directory`,
+        `${fundName} detailed fund information exact closing dates fund sizes USD millions vintage years`,
+        `${fundName} comprehensive deal database announcements press releases specific amounts dates details`,
+        `${fundName} team educational background MBA schools universities professional certifications degrees`,
+        `${fundName} office addresses zip codes phone numbers reception contact information locations`
       ]
 
       console.log('Stage 9: Deep contact & detail intelligence...')
