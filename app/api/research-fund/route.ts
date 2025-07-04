@@ -10,6 +10,12 @@ const openai = process.env.OPENAI_API_KEY
     })
   : null
 
+const openaiSearch = process.env.OPENAI_API_KEY 
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null
+
 interface PerplexityResponse {
   choices: Array<{
     message: {
@@ -107,8 +113,85 @@ async function searchWithPerplexity(query: string): Promise<string> {
     return response.data.choices[0].message.content
   } catch (error) {
     console.error('Perplexity API error:', error)
-    // Return empty string instead of throwing - let the calling function handle the failure
-    return `Research data not available for query: ${query}`
+    // Return placeholder instead of throwing - let the calling function handle the failure
+    return `[Perplexity search unavailable for: ${query}]`
+  }
+}
+
+async function searchWithOpenAI(query: string): Promise<string> {
+  try {
+    if (!openaiSearch) {
+      throw new Error('OpenAI not configured')
+    }
+
+    const completion = await openaiSearch.chat.completions.create({
+      model: "gpt-4o-search-preview",
+      web_search_options: {},
+      messages: [
+        {
+          role: "system",
+          content: "You are a specialized financial research assistant with expertise in private credit funds, direct lending, and institutional investing. Provide comprehensive, accurate, and detailed information about private credit firms, their investment strategies, team members, fund portfolios, recent transactions, and market positioning. Include specific details like contact information, fund sizes, dates, amounts, and competitive analysis when available."
+        },
+        {
+          role: "user",
+          content: query
+        }
+      ],
+      max_tokens: 4000,
+      temperature: 0.1
+    })
+
+    const content = completion.choices[0].message.content
+    if (!content) {
+      throw new Error('No content returned from OpenAI search')
+    }
+
+    return content
+  } catch (error) {
+    console.error('OpenAI search error:', error)
+    // Return placeholder instead of throwing
+    return `[OpenAI search unavailable for: ${query}]`
+  }
+}
+
+async function performComprehensiveSearch(query: string): Promise<string> {
+  try {
+    console.log(`Performing comprehensive search for: ${query}`)
+    
+    // Run both Perplexity and OpenAI searches in parallel
+    const [perplexityResult, openaiResult] = await Promise.all([
+      searchWithPerplexity(query),
+      searchWithOpenAI(query)
+    ])
+
+    // Combine results
+    const combinedResult = `
+=== PERPLEXITY RESEARCH ===
+${perplexityResult}
+
+=== OPENAI WEB SEARCH ===
+${openaiResult}
+`
+
+    return combinedResult
+  } catch (error) {
+    console.error('Comprehensive search error:', error)
+    // Fallback to individual searches if parallel fails
+    try {
+      const perplexityResult = await searchWithPerplexity(query)
+      const openaiResult = await searchWithOpenAI(query)
+      
+      return `
+=== PERPLEXITY RESEARCH ===
+${perplexityResult}
+
+=== OPENAI WEB SEARCH ===
+${openaiResult}
+`
+    } catch (fallbackError) {
+      console.error('Fallback search also failed:', fallbackError)
+      return `[Search unavailable for: ${query}]`
+    }
   }
 }
 
@@ -137,16 +220,32 @@ Your task is to:
 10. EXTRACT educational backgrounds, previous companies, career progression
 
 ENHANCEMENT INSTRUCTIONS:
-- Extract EVERY piece of contact information found (emails, phones, LinkedIn)
+- Extract EVERY piece of contact information found (emails, phones, LinkedIn, social media)
 - Identify patterns and connections between different pieces of information
 - Cross-reference team members with their transaction involvement
-- Extract precise financial metrics and performance data
-- Identify and analyze competitive landscape mentions
-- Find and organize all fund-specific information chronologically
-- Extract detailed transaction mechanics and structures
-- Organize office locations and contact details systematically
+- Extract precise financial metrics and performance data with exact amounts and dates
+- Identify and analyze competitive landscape mentions with market share data
+- Find and organize all fund-specific information chronologically with exact dates
+- Extract detailed transaction mechanics and structures with all parties involved
+- Organize office locations and contact details systematically with full addresses
+- PRIORITIZE finding missing contact information for all team members
+- Extract educational backgrounds with specific schools and degrees
+- Find previous company affiliations and career progression details
+- Identify exact fund closing dates, target vs. actual fund sizes
+- Extract specific transaction amounts, currencies, and use of proceeds
+- Find regulatory filings with specific filing dates and details
+- Identify strategic partnerships and key relationships
+- Extract performance metrics with specific IRR, returns, and deployment data
 
-Provide a comprehensive, enhanced analysis that maximizes the insights from the raw data. Include all contact details, precise dates, financial metrics, and strategic insights you can extract.
+CRITICAL GAPS TO FILL:
+- If team member emails are missing, provide reasoning or indicate "Not publicly disclosed"
+- If fund sizes are vague, extract exact amounts in millions USD
+- If transaction dates are unclear, provide specific month/year when possible
+- If contact information is partial, complete with available details
+- If competitive analysis is thin, enhance with market positioning insights
+- If office locations lack details, provide full addresses when available
+
+Provide a comprehensive, enhanced analysis that maximizes the insights from the raw data. Include all contact details, precise dates, financial metrics, and strategic insights you can extract. Be thorough and leave no information unused.
 
 Format as detailed analytical text with clear sections for different types of information.
 `
@@ -353,8 +452,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Step 2: Check for required API keys - if not available, use demo mode
-    if (!process.env.PERPLEXITY_API_KEY || !process.env.OPENAI_API_KEY) {
-      console.log('API keys not configured, using demo mode...')
+    if (!process.env.OPENAI_API_KEY) {
+      console.log('OpenAI API key not configured, using demo mode...')
       
       // Try to get demo data for the requested fund
       const demoData = getDemoData(fundName)
@@ -394,7 +493,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 1: Gathering company foundation & corporate intelligence...')
-      const basicInfoResults = await Promise.all(basicInfoQueries.map(query => searchWithPerplexity(query)))
+      const basicInfoResults = await Promise.all(basicInfoQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 2: Fund Portfolio & Capital Structure Analysis
       const fundQueries = [
@@ -407,7 +506,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 2: Gathering fund portfolio & capital structure analysis...')
-      const fundResults = await Promise.all(fundQueries.map(query => searchWithPerplexity(query)))
+      const fundResults = await Promise.all(fundQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 3: Leadership & Team Intelligence
       const teamQueries = [
@@ -420,7 +519,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 3: Researching leadership & team intelligence...')
-      const teamResults = await Promise.all(teamQueries.map(query => searchWithPerplexity(query)))
+      const teamResults = await Promise.all(teamQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 4: Transaction Analysis & Deal Flow Intelligence
       const dealQueries = [
@@ -433,7 +532,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 4: Analyzing transactions & deal flow intelligence...')
-      const dealResults = await Promise.all(dealQueries.map(query => searchWithPerplexity(query)))
+      const dealResults = await Promise.all(dealQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 5: Competitive Intelligence & Market Position
       const competitiveQueries = [
@@ -446,7 +545,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 5: Competitive intelligence & market position...')
-      const competitiveResults = await Promise.all(competitiveQueries.map(query => searchWithPerplexity(query)))
+      const competitiveResults = await Promise.all(competitiveQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 6: Performance Metrics & Risk Analysis
       const performanceQueries = [
@@ -459,7 +558,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 6: Performance metrics & risk analysis...')
-      const performanceResults = await Promise.all(performanceQueries.map(query => searchWithPerplexity(query)))
+      const performanceResults = await Promise.all(performanceQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 7: Strategic Relationships & Market Intelligence
       const relationshipQueries = [
@@ -472,7 +571,7 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 7: Strategic relationships & market intelligence...')
-      const relationshipResults = await Promise.all(relationshipQueries.map(query => searchWithPerplexity(query)))
+      const relationshipResults = await Promise.all(relationshipQueries.map(query => performComprehensiveSearch(query)))
 
       // Stage 8: Regulatory & Compliance Intelligence
       const regulatoryQueries = [
@@ -483,7 +582,20 @@ export async function POST(request: NextRequest) {
       ]
 
       console.log('Stage 8: Regulatory & compliance intelligence...')
-      const regulatoryResults = await Promise.all(regulatoryQueries.map(query => searchWithPerplexity(query)))
+      const regulatoryResults = await Promise.all(regulatoryQueries.map(query => performComprehensiveSearch(query)))
+
+      // Stage 9: Deep Contact & Detail Intelligence
+      const contactQueries = [
+        `${fundName} senior executives contact details direct email addresses phone numbers LinkedIn profiles social media`,
+        `${fundName} investment team member emails contact information business cards professional profiles`,
+        `${fundName} detailed fund information exact closing dates fund sizes in USD millions specific vintage years`,
+        `${fundName} comprehensive transaction database deal announcements press releases specific amounts dates`,
+        `${fundName} team member educational background MBA schools undergraduate universities professional certifications`,
+        `${fundName} specific office addresses with zip codes phone numbers reception contact information`
+      ]
+
+      console.log('Stage 9: Deep contact & detail intelligence...')
+      const contactResults = await Promise.all(contactQueries.map(query => performComprehensiveSearch(query)))
 
     // Combine all research stages
     const allResults = [
@@ -502,7 +614,9 @@ export async function POST(request: NextRequest) {
       '\n=== STRATEGIC RELATIONSHIPS & MARKET INTELLIGENCE ===',
       ...relationshipResults,
       '\n=== REGULATORY & COMPLIANCE INTELLIGENCE ===',
-      ...regulatoryResults
+      ...regulatoryResults,
+      '\n=== DEEP CONTACT & DETAIL INTELLIGENCE ===',
+      ...contactResults
     ]
 
     const combinedResearchData = allResults.join('\n\n---\n\n')
