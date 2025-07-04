@@ -107,7 +107,8 @@ async function searchWithPerplexity(query: string): Promise<string> {
     return response.data.choices[0].message.content
   } catch (error) {
     console.error('Perplexity API error:', error)
-    throw new Error('Failed to search with Perplexity')
+    // Return empty string instead of throwing - let the calling function handle the failure
+    return `Research data not available for query: ${query}`
   }
 }
 
@@ -381,16 +382,17 @@ export async function POST(request: NextRequest) {
     // Step 3: Perform advanced multi-stage research
     console.log('Performing advanced multi-stage research for:', fundName)
     
-    // Stage 1: Basic Company Information
-    const basicInfoQueries = [
-      `${fundName} private credit fund headquarters address phone website contact information`,
-      `${fundName} private credit firm founded year history background AUM assets under management`,
-      `${fundName} office locations global presence regional offices contact details`,
-      `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach`
-    ]
+    try {
+      // Stage 1: Basic Company Information
+      const basicInfoQueries = [
+        `${fundName} private credit fund headquarters address phone website contact information`,
+        `${fundName} private credit firm founded year history background AUM assets under management`,
+        `${fundName} office locations global presence regional offices contact details`,
+        `${fundName} private credit investment strategy focus sectors geographic focus direct lending approach`
+      ]
 
-    console.log('Stage 1: Gathering basic company information...')
-    const basicInfoResults = await Promise.all(basicInfoQueries.map(query => searchWithPerplexity(query)))
+      console.log('Stage 1: Gathering basic company information...')
+      const basicInfoResults = await Promise.all(basicInfoQueries.map(query => searchWithPerplexity(query)))
 
     // Stage 2: Fund-Specific Information
     const fundQueries = [
@@ -485,16 +487,41 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({
-      ...structuredReport,
-      _fromCache: false,
-      _researchDate: new Date().toISOString()
-    })
+      return NextResponse.json({
+        ...structuredReport,
+        _fromCache: false,
+        _researchDate: new Date().toISOString()
+      })
+
+    } catch (apiError) {
+      console.error('API research failed, falling back to demo data:', apiError)
+      
+      // Fallback to demo data if API research fails
+      const demoData = getDemoData(fundName)
+      
+      if (demoData) {
+        return NextResponse.json({
+          ...demoData,
+          _demoMode: true,
+          _message: 'API services temporarily unavailable. Showing demo data.',
+          _fallback: true
+        })
+      } else {
+        return NextResponse.json(
+          { 
+            error: `API services temporarily unavailable. Demo data not available for "${fundName}". Available demo funds: KKR, Blackstone, Apollo.`,
+            availableDemoFunds: ['KKR', 'Blackstone', 'Apollo'],
+            _fallback: true
+          },
+          { status: 503 }
+        )
+      }
+    }
 
   } catch (error) {
-    console.error('API error:', error)
+    console.error('Unexpected error:', error)
     return NextResponse.json(
-      { error: 'Failed to research fund. Please try again.' },
+      { error: 'An unexpected error occurred. Please try again.' },
       { status: 500 }
     )
   }
